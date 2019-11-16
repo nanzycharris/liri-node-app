@@ -1,0 +1,9 @@
+# Node modules
+node_modules
+
+# .DS_Store
+.DS_Store
+
+# dotenv environment variables file
+.env
+
