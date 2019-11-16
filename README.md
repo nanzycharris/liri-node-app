@@ -8,7 +8,7 @@ The following commands allow you to use liri.js:
 1) concert-this
 CLI: node liri.js concert-this <artist/band name here>
 
-This is a search from the Bands in Town Artist Events API ("https://rest.bandsintown.com/artists/" + artist + "/events,?app_ids=codingbootcamp") for an artist, and renders the following information about each event to the terminal:
+This is a search from the Bands in Town Artist Events APIfor an artist, and renders the following information about each event to the terminal:
 Name of the venue
 Venue location
 Date of the Event (use moment to format this as "MM/DD/YYYY")
@@ -40,3 +40,7 @@ CLI: node liri.js do-what-it-says
 
 Using the fs Node package, LIRI takes the text inside of random.txt and then uses it to call one of LIRI's commands.
 It runs spotify-this-song for "I Want it That Way," as it's specificed in random.txt.
+
+And that's it!
+
+Please, see the screenshots of liri.js performance in the 'Images' folder included in this repository for a clear example of this node.js app in action.
