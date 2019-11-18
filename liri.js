@@ -20,8 +20,8 @@ var spotify = new Spotify(keys.spotify);
 var fs = require('fs')
 
 // Code to indicate which arguments (input in command line) to use when running in terminal
-let command = process.arg[2];
-let input = process.arg[3];
+let command = process.argv[2];
+let input = process.argv[3];
 
 // Add switch commands - switch is a keyword, not a variable or function
 switch (command) {
@@ -45,11 +45,39 @@ switch (command) {
         break;
     case "default":
         // Instructions to indicate user what to type on command line 
-        console.log("\n" + "Type any of the following commands after node liri.js: " + "\n" +
-            "concert-this 'artist/band name' " + "\n"
-            "spotify-this 'song title' " + "\n"
-            "movie-this 'movie title' " + "\n"
-            "do-what-it-says " + "\n");
+        console.log("Type any of the following commands after \"node liri.js:\" " +
+            "\n" + "concert-this 'artist/band name' " +
+            "\n" + "spotify-this 'song title' " +
+            "\n" + "movie-this 'movie title' " +
+            "\n" + "do-what-it-says ");
+        break;
 };
+
+//  Write a function to explain instructions to user
+function instructions() {
+    console.log("Type any of the following commands after \"node liri.js:\" " +
+        "\n" + "concert-this 'artist/band name' " +
+        "\n" + "spotify-this 'song title' " +
+        "\n" + "movie-this 'movie title' " +
+        "\n" + "do-what-it-says ");
+}
+
+// Write function called spotify_this to run spotify search by song title
+function spotify_this() {
+    // First, assign default response if there's no input from user 
+    if (!input) { input = "The Sign. Ace of Base" }
+    // After first condition has been met, proceed with Spotify search query 
+    spotify.search({
+        type: 'track', query: input, limit: 1
+    },
+        function (error, data) {
+            if (error) {
+                return console.log("An error has occured" + error);
+            }
+            console.log(data.tracks.items[0].name)
+            console.log(data.tracks.items[0].artist[0].name)
+        });
+}
+
 
 
