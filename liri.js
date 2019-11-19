@@ -17,11 +17,16 @@ var keys = require("./keys.js");
 var spotify = new Spotify(keys.spotify);
 
 // Require and install fs package -- File System
-var fs = require('fs')
+var fs = require('fs');
+
+// Variable for log.txt to keep a record of search results
+var fileName = 'log.txt';
+var fullCommand = [];
 
 // Code to indicate which arguments (input in command line) to use when running in terminal
 let command = process.argv[2];
 let input = process.argv[3];
+
 
 // Add switch commands - switch is a keyword, not a variable or function
 switch (command) {
@@ -62,21 +67,30 @@ function instructions() {
         "\n" + "do-what-it-says ");
 }
 
+function logToFile(value) {
+    fs.appendFile(fileName, ',' + value, function (err) {
+        if (err) {
+            return console.log("Error found, but don't panic, it's not fatal")
+        }
+    })
+}
+
+logToFile(fullCommand);
+
+function concert_this() {
+
+}
+
 // Write function called spotify_this to run spotify search by song title
 function spotify_this() {
-    // First, assign default response if there's no input from user 
-    if (!input) { input = "The Sign. Ace of Base" }
-    // After first condition has been met, proceed with Spotify search query 
-    spotify.search({
-        type: 'track', query: input, limit: 1
-    },
-        function (error, data) {
-            if (error) {
-                return console.log("An error has occured" + error);
-            }
-            console.log(data.tracks.items[0].name)
-            console.log(data.tracks.items[0].artist[0].name)
-        });
+    if (!input) { input = "The Sign Ace of Base" }
+    spotify.search({ type: 'track', query: input, limit: 1 }, function (err, data) {
+        if (err) {
+            return console.log('Error occurred: ' + err);
+        }
+        console.log(data.tracks.items[0].name);
+        console.log(data.tracks.items[0].artist.name)
+    });
 }
 
 
