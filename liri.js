@@ -67,6 +67,7 @@ function instructions() {
         "\n" + "do-what-it-says ");
 }
 
+// Write a function to record search results into log.txt
 function logToFile(value) {
     fs.appendFile(fileName, ',' + value, function (err) {
         if (err) {
@@ -75,15 +76,33 @@ function logToFile(value) {
     })
 }
 
+// Call function logToFile to record search results
 logToFile(fullCommand);
 
+// Write function "concert_this" to search through Bands In Town
 function concert_this() {
+    if (input === undefined) {
+        input = "Bob Dylan"
+    }
 
+    Axios.get(`https://rest.bandsintown.com/artists/` + artist + `/events?app_id=codingbootcamp`)
+        .then(function (response) {
+            // Print data to console with console.log
+            console.log("_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _");
+            console.log(`Lineup: ${response.data[0].lineup}`)
+            console.log(`Venue Name: ${response.data[0].venue.name}`)
+            console.log(`Venue City: ${response.data[0].venue.city}`)
+            console.log(`Venue Name: ${response.data[0].venue.name}`)
+            console.log(`Venue Region: ${response.data[0].venue.name}`)
+            // Use moment.js to format the date
+            console.log(`Show date: ${Moment(response.data[0])}`)
+            console.log("_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _")
+        });
 }
 
-// Write function called spotify_this to run spotify search by song title
+// Write function called "spotify_this" to run spotify search by song title
 function spotify_this() {
-    if (!input) { input = "The Sign Ace of Base" }
+    if (!input) { input = "The Sign" }
     spotify.search({ type: 'track', query: input, limit: 1 }, function (err, data) {
         if (err) {
             return console.log('Error occurred: ' + err);
@@ -93,5 +112,35 @@ function spotify_this() {
     });
 }
 
+// Write function called "movie_this" to search through OMDB
+function movie_this() {
+    if (input === undefined) {
+        input = "Mr. Nobody"
+    }
 
+    Axios.get(`http://www.omdbapi.com/?i=tt3896198&apikey=59d24f2f`)
+        .then(function (response) {
+            // Print data to console with console.log
+            console.log("_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _");
+            console.log(`Title: ${response.data.Title}`)
+            console.log(`Year: ${response.data.Year}`)
+            console.log(`IMDB Rating: ${response.data.Ratings[0]}`)
+            console.log(`Rotten Tomatoes Rating: ${response.data.Ratings[1]}`)
+            console.log(`Country: ${response.data.Country}`)
+            console.log(`Language: ${response.data.Language}`)
+            console.log(`Plot: ${response.data.Plot}`)
+            console.log(`Actors: ${response.data.Actors}`)
 
+            console.log("_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _")
+        });
+}
+
+function do_what_it_says() {
+    spotify.search({ type: 'track', query: 'random.txt', input, limit: 1 }, function (err, data) {
+        if (err) {
+            return console.log('Error occurred: ' + err);
+        }
+        console.log(data.tracks.items[0].name);
+        console.log(data.tracks.items[0].artist.name)
+    });
+}
