@@ -108,7 +108,9 @@ function spotify_this() {
             return console.log('Error occurred: ' + err);
         }
         console.log(data.tracks.items[0].name);
-        console.log(data.tracks.items[0].artist.name)
+        console.log(data.tracks.items[0].artist.name);
+        console.log(data.tracks.items[0].album.name);
+        console.log(data.tracks.items[0].preview_url);
     });
 }
 
@@ -136,11 +138,12 @@ function movie_this() {
 }
 
 function do_what_it_says() {
-    spotify.search({ type: 'track', query: 'random.txt', input, limit: 1 }, function (err, data) {
-        if (err) {
-            return console.log('Error occurred: ' + err);
+    fs.readFile("random.txt", "utf8", function (error, data) {
+        if (error) {
+            return console.log(error);
         }
-        console.log(data.tracks.items[0].name);
-        console.log(data.tracks.items[0].artist.name)
-    });
+        spotify.search({ type: 'track', query: input, limit: 1 }, function (err, data) {
+
+        });
+    })
 }
