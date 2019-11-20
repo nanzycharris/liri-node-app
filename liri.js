@@ -36,7 +36,7 @@ switch (command) {
         // Call the function for concert-this. Notice the function name has an underscore instead of hyphen
         concert_this();
         break;
-    case "spotify-this":
+    case "spotify-this-song":
         // Call the function for spotify-this. Notice underscore instead of hyphen
         spotify_this();
         break;
@@ -47,13 +47,9 @@ switch (command) {
     case "do-what-it-says":
         do_what_it_says();
         break;
-    case "default":
+    default:
         // Instructions to indicate user what to type on command line 
-        console.log("Type any of the following commands after \"node liri.js:\" " +
-            "\n" + "concert-this 'artist/band name' " +
-            "\n" + "spotify-this 'song title' " +
-            "\n" + "movie-this 'movie title' " +
-            "\n" + "do-what-it-says ");
+        instructions()
         break;
 };
 
@@ -69,15 +65,12 @@ function instructions() {
 // Write a function to record search results into log.txt
 function logToFile(command, input) {
     //   fullCommand.push(command, input)
-    fs.appendFile(fileName, ',' + command + input, function (err) {
+    fs.appendFile(fileName, ',' + command + "\n" + input, function (err) {
         if (err) {
             return console.log("Error found, but don't panic, it's not fatal")
         }
     })
 }
-
-// Call function logToFile to record search results
-logToFile();
 
 // Write function "concert_this" to search through Bands In Town
 function concert_this() {
@@ -97,11 +90,14 @@ function concert_this() {
             // Use moment.js to format the date
             console.log(`Show date: ${Moment(response.data[0]).format("MM-DD-YYYY")}`)
             console.log("_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _")
+            // Call function logToFile to record search results
+            logToFile(command, input);
         });
 }
 
 // Write function called "spotify_this" to run spotify search by song title
 function spotify_this() {
+    console.log(input)
     if (!input) { input = "The Sign" }
     spotify.search({ type: 'track', query: input, limit: 1 }, function (err, data) {
         if (err) {
@@ -111,6 +107,8 @@ function spotify_this() {
         console.log(data.tracks.items[0].artists[0].name);
         console.log(data.tracks.items[0].album.name);
         console.log(data.tracks.items[0].preview_url);
+        // Call function logToFile to record search results
+        logToFile(command, input);
     });
 }
 
@@ -133,6 +131,8 @@ function movie_this() {
             console.log(`Plot: ${response.data.Plot}`)
             console.log(`Actors: ${response.data.Actors}`)
             console.log("_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _")
+            // Call function logToFile to record search results
+            logToFile(command, input);
         });
 }
 
@@ -154,7 +154,7 @@ function do_what_it_says() {
                     // Call the function for concert-this. Notice the function name has an underscore instead of hyphen
                     concert_this();
                     break;
-                case "spotify-this":
+                case "spotify-this-song":
                     // Call the function for spotify-this. Notice underscore instead of hyphen
                     spotify_this();
                     break;
@@ -162,15 +162,11 @@ function do_what_it_says() {
                     // Call the funtion movie-this. Notice underscore instead of hyphen
                     movie_this();
                     break;
-                case "default":
-                    // Instructions to indicate user what to type on command line 
-                    console.log("Type any of the following commands after \"node liri.js:\" " +
-                        "\n" + "concert-this 'artist/band name' " +
-                        "\n" + "spotify-this 'song title' " +
-                        "\n" + "movie-this 'movie title' " +
-                        "\n" + "do-what-it-says ");
+                default:
+                    instructions();
                     break;
             };
         }
     });
 }
+
