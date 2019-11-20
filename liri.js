@@ -21,7 +21,6 @@ var fs = require('fs');
 
 // Variable for log.txt to keep a record of search results
 var fileName = 'log.txt';
-var fullCommand = [];
 
 // Code to indicate which arguments (input in command line) to use when running in terminal
 let command = process.argv[2];
@@ -57,7 +56,7 @@ switch (command) {
 function instructions() {
     console.log("Type any of the following commands after \"node liri.js:\" " +
         "\n" + "concert-this 'artist/band name' " +
-        "\n" + "spotify-this 'song title' " +
+        "\n" + "spotify-this-song 'song title' " +
         "\n" + "movie-this 'movie title' " +
         "\n" + "do-what-it-says ");
 }
@@ -155,7 +154,7 @@ function do_what_it_says() {
                     concert_this();
                     break;
                 case "spotify-this-song":
-                    // Call the function for spotify-this. Notice underscore instead of hyphen
+                    // Call the function for spotify-this-song. Notice underscore instead of hyphen
                     spotify_this();
                     break;
                 case "movie-this":
