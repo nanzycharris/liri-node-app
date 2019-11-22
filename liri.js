@@ -97,7 +97,7 @@ function concert_this() {
 // Write function called "spotify_this" to run spotify search by song title
 function spotify_this() {
     console.log(input)
-    if (!input) { input = "The Sign" }
+    if (!input) { input = "the sign ace of base" }
     spotify.search({ type: 'track', query: input, limit: 1 }, function (err, data) {
         if (err) {
             return console.log('Error occurred: ' + err);
